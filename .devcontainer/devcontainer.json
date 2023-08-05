@@ -10,12 +10,13 @@
 		"ghcr.io/devcontainers/features/azure-cli:1": {},
 		"ghcr.io/devcontainers/features/node:1": {}
 	},
-	"onCreateCommand": "az extension add -n ml",
+	"onCreateCommand": "az extension add -n ml && pip3 install azure-ai-ml",
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"ms-toolsai.vscode-ai",
-				"ms-python.python"
+				"ms-python.python",
+				"ms-toolsai.jupyter"
 			]
 		}
 	}
