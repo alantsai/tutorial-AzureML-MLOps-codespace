@@ -1,13 +1,16 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 code: .
-command: python train_model.py --num_epochs 1 --input_dir ${{inputs.fowl_data}} --output_dir outputs 
-environment: azureml:AzureML-pytorch-1.10-ubuntu18.04-py38-cuda11-gpu:35
+command: python main.py --data ${{inputs.data}} --test_train_ratio ${{inputs.test_train_ratio}} --learning_rate ${{inputs.learning_rate}} --registered_model_name ${{inputs.registered_model_name}}
+environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38-cpu@latest
 compute: azureml:cpu-cluster
 environment_variables:
   AZUREML_COMPUTE_USE_COMMON_RUNTIME: "false"
 inputs:
-  fowl_data:
-     type: uri_folder
-     path: azureml:fowl-data:1
+  data:
+     type: uri_file
+     path: https://azuremlexamples.blob.core.windows.net/datasets/credit_card/default_of_credit_card_clients.csv
+  test_train_ratio: 0.2
+  learning_rate: 0.25
+  registered_model_name: "credit_defaults_model"
 
-experiment_name: pytorch-training-experiment
+experiment_name: credit_default_prediction

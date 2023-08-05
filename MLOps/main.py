@@ -32,7 +32,7 @@ def main():
 
     print("input data:", args.data)
     
-    credit_df = pd.read_excel(args.data, header=1, index_col=0)
+    credit_df = pd.read_csv(args.data, header=1, index_col=0)
 
     mlflow.log_metric("num_samples", credit_df.shape[0])
     mlflow.log_metric("num_features", credit_df.shape[1] - 1)

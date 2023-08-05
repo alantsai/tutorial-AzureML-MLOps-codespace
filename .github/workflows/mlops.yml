@@ -23,16 +23,6 @@ jobs:
           az account show
           az group list
           pwd 
-    
-    #- name: setup python
-    #  uses: actions/setup-python@v4
-    #  with:
-    #    python-version: '3.10' # install the python version needed
-
-    #- name: extract data files
-    #  run: | 
-    #    cd MLOps
-    #    python download-data.py
 
     - name: Azure CLI script - Prepare and run PyTorch Demo  Training on Azure ML
       uses: azure/CLI@v1
@@ -42,5 +32,47 @@ jobs:
           az extension add -n ml
           cd MLOps
           az ml compute create --file compute.yml --subscription ${{ secrets.AZURE_SUBSCRIPTION }} --resource-group ${{ secrets.RESOURCE_GROUP }} --workspace-name ${{ secrets.AML_WORKSPACE }}
-          az ml data create --file data.yml --subscription ${{ secrets.AZURE_SUBSCRIPTION }} --resource-group ${{ secrets.RESOURCE_GROUP }} --workspace-name ${{ secrets.AML_WORKSPACE }}
           az ml job create --file train.yml --subscription ${{ secrets.AZURE_SUBSCRIPTION }} --resource-group ${{ secrets.RESOURCE_GROUP }} --workspace-name ${{ secrets.AML_WORKSPACE }}
+
+
+  # setup-aml-and-pytorch-train:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: Checkout MLOps Repository
+  #     id: checkout_repository
+  #     uses: actions/checkout@v2
+
+  #   - name: Login with Azure
+  #     uses: azure/login@v1
+  #     with:
+  #       creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+  #   - name: 'Run Azure CLI commands'
+  #     run: |
+  #         az account show
+  #         az group list
+  #         pwd 
+    
+  #   #- name: setup python
+  #   #  uses: actions/setup-python@v4
+  #   #  with:
+  #   #    python-version: '3.10' # install the python version needed
+
+  #   #- name: extract data files
+  #   #  run: | 
+  #   #    cd MLOps
+  #   #    cd pytorch
+  #   #    python download-data.py
+
+  #   - name: Azure CLI script - Prepare and run PyTorch Demo  Training on Azure ML
+  #     uses: azure/CLI@v1
+  #     with:
+  #       azcliversion: 2.50.0
+  #       inlineScript: |
+  #         az extension add -n ml
+  #         cd MLOps
+  #         cd pytorch
+  #         az ml compute create --file compute.yml --subscription ${{ secrets.AZURE_SUBSCRIPTION }} --resource-group ${{ secrets.RESOURCE_GROUP }} --workspace-name ${{ secrets.AML_WORKSPACE }}
+  #         az ml data create --file data.yml --subscription ${{ secrets.AZURE_SUBSCRIPTION }} --resource-group ${{ secrets.RESOURCE_GROUP }} --workspace-name ${{ secrets.AML_WORKSPACE }}
+  #         az ml job create --file train.yml --subscription ${{ secrets.AZURE_SUBSCRIPTION }} --resource-group ${{ secrets.RESOURCE_GROUP }} --workspace-name ${{ secrets.AML_WORKSPACE }}
